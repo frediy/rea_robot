@@ -8,7 +8,7 @@ describe Robot do
     let(:y) { 10 }
     let(:direction) { 'NORTH' }
 
-    shared_examples 'raise Robot::CommandIgnoredError for all commands' do
+    shared_examples 'raise Robot::CommandIgnoredError for all commands except place' do
       describe 'ignore #move_forward' do
         subject(:move_forward) { robot.move_forward }
 
@@ -35,13 +35,13 @@ describe Robot do
     end
 
     context 'when not placed' do
-      it_behaves_like 'raise Robot::CommandIgnoredError for all commands'
+      it_behaves_like 'raise Robot::CommandIgnoredError for all commands except place'
     end
 
     context 'when placed off board' do
       before { robot.place(x, y, direction) }
 
-      it_behaves_like 'raise Robot::CommandIgnoredError for all commands'
+      it_behaves_like 'raise Robot::CommandIgnoredError for all commands except place'
     end
   end
 
@@ -124,8 +124,66 @@ describe Robot do
   end
 
   describe '#turn_right' do
+    let(:x) { 0 }
+    let(:y) { 0 }
+
+    subject(:direction) { robot.direction }
+
+    before do
+      robot.place(x, y, initial_direction)
+      robot.turn_right
+    end
+
+    context 'initial_direction is NORTH' do
+      let(:initial_direction) { 'NORTH' }
+      it { is_expected.to eq 'EAST' }
+    end
+
+    context 'initial_direction is EAST' do
+      let(:initial_direction) { 'EAST' }
+      it { is_expected.to eq 'SOUTH' }
+    end
+
+    context 'initial_direction is SOUTH' do
+      let(:initial_direction) { 'SOUTH' }
+      it { is_expected.to eq 'WEST' }
+    end
+
+    context 'initial_direction is WEST' do
+      let(:initial_direction) { 'WEST' }
+      it { is_expected.to eq 'NORTH' }
+    end
   end
 
   describe '#turn_left' do
+    let(:x) { 0 }
+    let(:y) { 0 }
+
+    subject(:direction) { robot.direction }
+
+    before do
+      robot.place(x, y, initial_direction)
+      robot.turn_left
+    end
+
+    context 'initial_direction is NORTH' do
+      let(:initial_direction) { 'NORTH' }
+      it { is_expected.to eq 'WEST' }
+    end
+
+    context 'initial_direction is EAST' do
+      let(:initial_direction) { 'EAST' }
+      it { is_expected.to eq 'NORTH' }
+    end
+
+    context 'initial_direction is SOUTH' do
+      let(:initial_direction) { 'SOUTH' }
+      it { is_expected.to eq 'EAST' }
+    end
+
+    context 'initial_direction is WEST' do
+      let(:initial_direction) { 'WEST' }
+      it { is_expected.to eq 'SOUTH' }
+    end
   end
 end
