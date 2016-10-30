@@ -8,43 +8,45 @@ describe CommandsInterpreter do
   describe '#process and #output' do
     subject(:process) { commands_interpreter.process }
 
-    describe 'problem example a' do
-      let(:commands_string) do
-        <<-eos
+    describe 'problem examples' do
+      describe 'example a' do
+        let(:commands_string) do
+          <<-eos
 PLACE 0,0,NORTH
 MOVE
 REPORT
-        eos
+          eos
+        end
+
+        specify { expect{ process }.to output("0,1,NORTH\n").to_stdout }
       end
 
-      specify { expect{ process }.to output("0,1,NORTH\n").to_stdout }
-    end
-
-    describe 'problem example b' do
-      let(:commands_string) do
-        <<-eos
+      describe 'example b' do
+        let(:commands_string) do
+          <<-eos
 PLACE 0,0,NORTH
 LEFT
 REPORT
-        eos
+          eos
+        end
+
+        specify { expect{ process }.to output("0,0,WEST\n").to_stdout }
       end
 
-      specify { expect{ process }.to output("0,0,WEST\n").to_stdout }
-    end
-
-    describe 'problem example c' do
-      let(:commands_string) do
-        <<-eos
+      describe 'example c' do
+        let(:commands_string) do
+          <<-eos
 PLACE 1,2,EAST
 MOVE
 MOVE
 LEFT
 MOVE
 REPORT
-        eos
-      end
+          eos
+        end
 
-      specify { expect{ process }.to output("3,3,NORTH\n").to_stdout }
+        specify { expect{ process }.to output("3,3,NORTH\n").to_stdout }
+      end
     end
   end
 end
