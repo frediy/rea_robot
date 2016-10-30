@@ -3,10 +3,7 @@ class Robot
 
   DIRECTIONS = Array.new(['NORTH', 'EAST', 'SOUTH', 'WEST'])
 
-  def initialize
-  end
-
-  ## Writer methods
+  ## Writer Commands
   def place(x, y, direction)
     @x = x
     @y = y
@@ -34,8 +31,8 @@ class Robot
     @direction = DIRECTIONS[direction_index + 1 - DIRECTIONS.length]
   end
 
-  ## Query methods
-  def position_and_direction_text
+  ## Query Commands
+  def report
     "#{@x},#{@y},#{@direction}"
   end
 

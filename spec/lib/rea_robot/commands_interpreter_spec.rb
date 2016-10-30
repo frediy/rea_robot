@@ -6,9 +6,7 @@ describe CommandsInterpreter do
   subject(:commands_interpreter) { CommandsInterpreter.new(commands_string, robot) }
 
   describe '#process and #output' do
-    subject(:output) { commands_interpreter.output }
-
-    before { commands_interpreter.process }
+    subject(:process) { commands_interpreter.process }
 
     describe 'problem example a' do
       let(:commands_string) do
@@ -19,7 +17,7 @@ REPORT
         eos
       end
 
-      it { is_expected.to eq '0,1,NORTH' }
+      specify { expect{ process }.to output("0,1,NORTH\n").to_stdout }
     end
 
     describe 'problem example b' do
@@ -31,7 +29,7 @@ REPORT
         eos
       end
 
-      it { is_expected.to eq '0,0,WEST' }
+      specify { expect{ process }.to output("0,0,WEST\n").to_stdout }
     end
 
     describe 'problem example c' do
@@ -46,7 +44,7 @@ REPORT
         eos
       end
 
-      it { is_expected.to eq '3,3,NORTH' }
+      specify { expect{ process }.to output("3,3,NORTH\n").to_stdout }
     end
   end
 end

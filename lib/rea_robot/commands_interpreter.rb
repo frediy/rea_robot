@@ -14,15 +14,12 @@ class CommandsInterpreter
       when 'MOVE'
         @robot.move_forward
       when 'REPORT'
+        puts @robot.report
       else # PLACE
         x, y, direction = position_and_direction_from_place_command(command)
         @robot.place(x, y, direction)
       end
     end
-  end
-
-  def output
-    @robot.position_and_direction_text
   end
 
 private
