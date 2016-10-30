@@ -1,7 +1,7 @@
 class Robot
   attr_reader :x, :y, :direction
 
-  DIRECTIONS = Array.new(['NORTH', 'EAST', 'SOUTH', 'WEST'])
+  DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
   ## Writer Commands
   def place(x, y, direction)
