@@ -4,19 +4,44 @@ describe Robot do
   subject(:robot) { Robot.new }
 
   describe 'ignore commands' do
-    shared_examples 'ignore all commands' do
-      # ignore move before first place command
-      # ignore right before first place command
-      # ignore left before first place command
-      # ignore report before first place command
+    let(:x) { 10 }
+    let(:y) { 10 }
+    let(:direction) { 'NORTH' }
+
+    shared_examples 'raise Robot::CommandIgnoredError for all commands' do
+      describe 'ignore #move_forward' do
+        subject(:move_forward) { robot.move_forward }
+
+        specify { expect { move_forward }.to raise_error(Robot::CommandIgnoredError) }
+      end
+
+      describe 'ignore #turn_left' do
+        subject(:turn_left) { robot.turn_left }
+
+        specify { expect { turn_left }.to raise_error(Robot::CommandIgnoredError) }
+      end
+
+      describe 'ignore #turn_right' do
+        subject(:turn_right) { robot.turn_right }
+
+        specify { expect { turn_right }.to raise_error(Robot::CommandIgnoredError) }
+      end
+
+      describe 'ignore #report' do
+        subject(:report) { robot.report }
+
+        specify { expect { report }.to raise_error(Robot::CommandIgnoredError) }
+      end
     end
 
     context 'when not placed' do
-      it_behaves_like 'ignore all commands'
+      it_behaves_like 'raise Robot::CommandIgnoredError for all commands'
     end
 
     context 'when placed off board' do
-      it_behaves_like 'ignore all commands'
+      before { robot.place(x, y, direction) }
+
+      it_behaves_like 'raise Robot::CommandIgnoredError for all commands'
     end
   end
 
@@ -61,11 +86,40 @@ describe Robot do
       end
     end
 
+    shared_examples 'does not move' do
+      specify { expect(robot.x).to eq x }
+      specify { expect(robot.y).to eq y }
+    end
+
     context 'placed on edge facing edge' do
-      # can't move off north edge
-      # can't move off east edge
-      # can't move off south edge
-      # can't move off west edge
+      describe 'NORTH edge' do
+        let(:direction) { 'NORTH' }
+        let(:x) { 0 }
+        let(:y) { 4 }
+
+        it_behaves_like 'does not move'
+      end
+      describe 'EAST edge' do
+        let(:direction) { 'EAST' }
+        let(:x) { 4 }
+        let(:y) { 0 }
+
+        it_behaves_like 'does not move'
+      end
+      describe 'SOUTH edge' do
+        let(:direction) { 'SOUTH' }
+        let(:x) { 0 }
+        let(:y) { 0 }
+
+        it_behaves_like 'does not move'
+      end
+      describe 'WEST edge' do
+        let(:direction) { 'WEST' }
+        let(:x) { 0 }
+        let(:y) { 0 }
+
+        it_behaves_like 'does not move'
+      end
     end
   end
 
@@ -74,5 +128,4 @@ describe Robot do
 
   describe '#turn_left' do
   end
-
 end
