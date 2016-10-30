@@ -15,10 +15,7 @@ class CommandsInterpreter
         @robot.move_forward
       when 'REPORT'
       else # PLACE
-        position_and_direction_text = command.split(' ').last
-        x, y, direction = position_and_direction_text.split(',')
-        x = x.to_i
-        y = y.to_i
+        x, y, direction = position_and_direction_from_place_command(command)
         @robot.place(x, y, direction)
       end
     end
@@ -26,5 +23,13 @@ class CommandsInterpreter
 
   def output
     @robot.position_and_direction_text
+  end
+
+private
+
+  def position_and_direction_from_place_command(command)
+    position_and_direction_text = command.split(' ').last
+    x, y, direction = position_and_direction_text.split(',')
+    [x.to_i, y.to_i, direction]
   end
 end
