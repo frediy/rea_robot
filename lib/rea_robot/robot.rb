@@ -1,29 +1,41 @@
 class Robot
   class CommandIgnoredError < StandardError; end
 
-  attr_reader :x, :y, :direction
+  attr_reader :direction
+
+  def x
+    @position.x
+  end
+
+  def y
+    @position.y
+  end
+
+  def direction_vector
+    case @direction
+    when 'NORTH'
+      Vector.new(0, 1)
+    when 'EAST'
+      Vector.new(1, 0)
+    when 'SOUTH'
+      Vector.new(0, -1)
+    else # WEST
+      Vector.new(-1, 0)
+    end
+  end
 
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
   ## Writer Commands
   def place(x, y, direction)
-    @x = x
-    @y = y
+    @position = Vector.new(x, y)
     @direction = direction
   end
 
   def move_forward
     raise CommandIgnoredError if ignore_commands?
-    case @direction
-    when 'NORTH'
-      @y += 1 if can_move_to?(x, y + 1)
-    when 'EAST'
-      @x += 1 if can_move_to?(x + 1, y)
-    when 'SOUTH'
-      @y -= 1 if can_move_to?(x, y - 1)
-    else # 'WEST'
-      @x -= 1 if can_move_to?(x - 1, y)
-    end
+    new_position = @position + direction_vector
+    @position = new_position if can_move_to?(new_position)
   end
 
   def turn_left
@@ -39,7 +51,7 @@ class Robot
   ## Query Commands
   def report
     raise CommandIgnoredError if ignore_commands?
-    "#{@x},#{@y},#{@direction}"
+    "#{@position.x},#{@position.y},#{@direction}"
   end
 
 private
@@ -48,8 +60,8 @@ private
     DIRECTIONS.index(@direction)
   end
 
-  def can_move_to?(x, y)
-    PositionHelper.on_board?(x, y)
+  def can_move_to?(position)
+    PositionHelper.on_board?(position.x, position.y)
   end
 
   def ignore_commands?
@@ -57,10 +69,10 @@ private
   end
 
   def placed?
-    @x && @y && @direction
+    @position && @direction
   end
 
   def on_board?
-    PositionHelper.on_board?(@x, @y)
+    PositionHelper.on_board?(@position.x, @position.y)
   end
 end
