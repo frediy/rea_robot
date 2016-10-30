@@ -1,7 +1,7 @@
 class Robot
   class CommandIgnoredError < StandardError; end
 
-  attr_reader :direction
+  attr_reader :position, :direction
 
   def x
     @position.x
@@ -27,8 +27,8 @@ class Robot
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
   ## Writer Commands
-  def place(x, y, direction)
-    @position = Vector.new(x, y)
+  def place(position, direction)
+    @position = position
     @direction = direction
   end
 
@@ -61,7 +61,7 @@ private
   end
 
   def can_move_to?(position)
-    PositionHelper.on_board?(position.x, position.y)
+    Position.on_board?(position)
   end
 
   def ignore_commands?
@@ -73,6 +73,6 @@ private
   end
 
   def on_board?
-    PositionHelper.on_board?(@position.x, @position.y)
+    Position.on_board?(@position)
   end
 end

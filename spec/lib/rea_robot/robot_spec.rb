@@ -4,8 +4,8 @@ describe Robot do
   subject(:robot) { Robot.new }
 
   describe 'ignore commands' do
-    let(:x) { 10 }
-    let(:y) { 10 }
+    let(:position) { Vector.new(10, 10) }
+
     let(:direction) { 'NORTH' }
 
     shared_examples 'raise Robot::CommandIgnoredError for all commands except place' do
@@ -39,7 +39,7 @@ describe Robot do
     end
 
     context 'when placed off board' do
-      before { robot.place(x, y, direction) }
+      before { robot.place(position, direction) }
 
       it_behaves_like 'raise Robot::CommandIgnoredError for all commands except place'
     end
@@ -49,74 +49,64 @@ describe Robot do
     subject(:move_forward) { robot.move_forward }
 
     before do
-      robot.place(x, y, direction)
+      robot.place(position, direction)
       move_forward
     end
 
     context 'placed where can always move (middle)' do
-      let(:x) { 3 }
-      let(:y) { 3 }
+      let(:position) { Vector.new(3, 3) }
 
       context 'when direction is NORTH' do
         let(:direction) { 'NORTH' }
 
-        specify { expect(robot.x).to eq x }
-        specify { expect(robot.y).to eq y + 1 }
+        specify { expect(robot.position).to eq position + Vector.new(0, 1) }
       end
 
       context 'when direction is EAST' do
         let(:direction) { 'EAST' }
 
-        specify { expect(robot.x).to eq x + 1 }
-        specify { expect(robot.y).to eq y }
+        specify { expect(robot.position).to eq position + Vector.new(1, 0) }
       end
 
       context 'when direction is SOUTH' do
         let(:direction) { 'SOUTH' }
 
-        specify { expect(robot.x).to eq x }
-        specify { expect(robot.y).to eq y - 1 }
+        specify { expect(robot.position).to eq position + Vector.new(0, -1) }
       end
 
       context 'when direction is WEST' do
         let(:direction) { 'WEST' }
 
-        specify { expect(robot.x).to eq x - 1 }
-        specify { expect(robot.y).to eq y }
+        specify { expect(robot.position).to eq position + Vector.new(-1, 0) }
       end
     end
 
     shared_examples 'does not move' do
-      specify { expect(robot.x).to eq x }
-      specify { expect(robot.y).to eq y }
+      specify { expect(robot.position).to eq position }
     end
 
     context 'placed on edge facing edge' do
       describe 'NORTH edge' do
         let(:direction) { 'NORTH' }
-        let(:x) { 0 }
-        let(:y) { 4 }
+        let(:position) { Vector.new(0, 4) }
 
         it_behaves_like 'does not move'
       end
       describe 'EAST edge' do
         let(:direction) { 'EAST' }
-        let(:x) { 4 }
-        let(:y) { 0 }
+        let(:position) { Vector.new(4, 0) }
 
         it_behaves_like 'does not move'
       end
       describe 'SOUTH edge' do
         let(:direction) { 'SOUTH' }
-        let(:x) { 0 }
-        let(:y) { 0 }
+        let(:position) { Vector.new(0, 0) }
 
         it_behaves_like 'does not move'
       end
       describe 'WEST edge' do
         let(:direction) { 'WEST' }
-        let(:x) { 0 }
-        let(:y) { 0 }
+        let(:position) { Vector.new(0, 0) }
 
         it_behaves_like 'does not move'
       end
@@ -124,13 +114,12 @@ describe Robot do
   end
 
   describe '#turn_right' do
-    let(:x) { 0 }
-    let(:y) { 0 }
+    let(:position) { Vector.new(0, 0) }
 
     subject(:direction) { robot.direction }
 
     before do
-      robot.place(x, y, initial_direction)
+      robot.place(position, initial_direction)
       robot.turn_right
     end
 
@@ -156,13 +145,12 @@ describe Robot do
   end
 
   describe '#turn_left' do
-    let(:x) { 0 }
-    let(:y) { 0 }
+    let(:position) { Vector.new(0, 0) }
 
     subject(:direction) { robot.direction }
 
     before do
-      robot.place(x, y, initial_direction)
+      robot.place(position, initial_direction)
       robot.turn_left
     end
 
