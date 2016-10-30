@@ -23,7 +23,6 @@ class CommandsInterpreter
       rescue Robot::CommandIgnoredError
       end
     end
-
   end
 
 private
