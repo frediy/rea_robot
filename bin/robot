@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+  require "bundler/setup"
+  require "rea_robot"
+
+  # commands = ARGV[0]
+  commands = File.read(ARGV[0])
+  robot = Robot.new
+
+  command_interpreter = CommandsInterpreter.new(commands, robot)
+  command_interpreter.process
