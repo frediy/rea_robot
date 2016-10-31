@@ -4,12 +4,12 @@ class Direction < Vector
   SOUTH = Direction[0, -1]
   WEST  = Direction[-1, 0]
 
-  def x
-    self[0]
+  def self.from_str(str)
+    Object.const_get("Direction::#{str}")
   end
 
-  def y
-    self[1]
+  def self.from_vector(vector)
+    Direction[vector[0], vector[1]]
   end
 
   def to_s
@@ -27,19 +27,19 @@ class Direction < Vector
     end
   end
 
-  def self.from_vector(vector)
-    Direction[vector[0], vector[1]]
-  end
-
-  def self.from_str(str)
-    Object.const_get("Direction::#{str}")
-  end
-
   def rotate_counter_clockwise
     Direction.from_vector(Matrix[[0, -1], [1, 0]] * self)
   end
 
   def rotate_clockwise
     Direction.from_vector(Matrix[[0, 1], [-1, 0]] * self)
+  end
+
+  def +(other)
+    if other.is_a?(Position)
+      Position[self[0] + other[0], self[1] + other[1]]
+    else
+      super(other)
+    end
   end
 end

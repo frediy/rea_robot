@@ -3,16 +3,10 @@ class Robot
 
   attr_reader :position, :direction
 
-  def direction_vector
-
-  end
-
-  DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
-
   ## Writer Commands
   def place(position, direction)
     @position = position
-    @direction = Direction.from_str(direction)
+    @direction = direction
   end
 
   def move_forward
@@ -34,7 +28,7 @@ class Robot
   ## Query Commands
   def report
     raise CommandIgnoredError if ignore_commands?
-    "#{@position.x},#{@position.y},#{@direction}"
+    "#{@position},#{@direction}"
   end
 
 private

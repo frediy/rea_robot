@@ -6,7 +6,7 @@ describe Robot do
   describe 'ignore commands' do
     let(:position) { Position[10, 10] }
 
-    let(:direction) { 'NORTH' }
+    let(:direction) { Direction::NORTH }
 
     shared_examples 'raise Robot::CommandIgnoredError for all commands except place' do
       describe 'ignore #move_forward' do
@@ -57,25 +57,25 @@ describe Robot do
       let(:position) { Position::MIDDLE }
 
       context 'when direction is NORTH' do
-        let(:direction) { 'NORTH' }
+        let(:direction) { Direction::NORTH }
 
         specify { expect(robot.position).to eq Position[2, 3] }
       end
 
       context 'when direction is EAST' do
-        let(:direction) { 'EAST' }
+        let(:direction) { Direction::EAST }
 
         specify { expect(robot.position).to eq Position[3, 2] }
       end
 
       context 'when direction is SOUTH' do
-        let(:direction) { 'SOUTH' }
+        let(:direction) { Direction::SOUTH }
 
         specify { expect(robot.position).to eq Position[2, 1] }
       end
 
       context 'when direction is WEST' do
-        let(:direction) { 'WEST' }
+        let(:direction) { Direction::WEST }
 
         specify { expect(robot.position).to eq Position[1, 2] }
       end
@@ -87,25 +87,25 @@ describe Robot do
 
     context 'placed on edge facing edge' do
       describe 'NORTH edge' do
-        let(:direction) { 'NORTH' }
+        let(:direction) { Direction::NORTH }
         let(:position) { Position[0, 4] }
 
         it_behaves_like 'does not move'
       end
       describe 'EAST edge' do
-        let(:direction) { 'EAST' }
+        let(:direction) { Direction::EAST }
         let(:position) { Position[4, 0] }
 
         it_behaves_like 'does not move'
       end
       describe 'SOUTH edge' do
-        let(:direction) { 'SOUTH' }
+        let(:direction) { Direction::SOUTH }
         let(:position) { Position[0, 0] }
 
         it_behaves_like 'does not move'
       end
       describe 'WEST edge' do
-        let(:direction) { 'WEST' }
+        let(:direction) { Direction::WEST }
         let(:position) { Position[0, 0] }
 
         it_behaves_like 'does not move'
@@ -116,7 +116,7 @@ describe Robot do
   describe '#turn_right' do
     let(:position) { Position[0, 0] }
 
-    subject(:direction) { robot.direction.to_s }
+    subject(:direction) { robot.direction }
 
     before do
       robot.place(position, initial_direction)
@@ -124,30 +124,30 @@ describe Robot do
     end
 
     context 'initial_direction is NORTH' do
-      let(:initial_direction) { 'NORTH' }
-      it { is_expected.to eq 'EAST' }
+      let(:initial_direction) { Direction::NORTH }
+      it { is_expected.to eq Direction::EAST }
     end
 
     context 'initial_direction is EAST' do
-      let(:initial_direction) { 'EAST' }
-      it { is_expected.to eq 'SOUTH' }
+      let(:initial_direction) { Direction::EAST }
+      it { is_expected.to eq Direction::SOUTH }
     end
 
     context 'initial_direction is SOUTH' do
-      let(:initial_direction) { 'SOUTH' }
-      it { is_expected.to eq 'WEST' }
+      let(:initial_direction) { Direction::SOUTH }
+      it { is_expected.to eq Direction::WEST }
     end
 
     context 'initial_direction is WEST' do
-      let(:initial_direction) { 'WEST' }
-      it { is_expected.to eq 'NORTH' }
+      let(:initial_direction) { Direction::WEST }
+      it { is_expected.to eq Direction::NORTH }
     end
   end
 
   describe '#turn_left' do
     let(:position) { Position[0, 0] }
 
-    subject(:direction) { robot.direction.to_s }
+    subject(:direction) { robot.direction }
 
     before do
       robot.place(position, initial_direction)
@@ -155,23 +155,23 @@ describe Robot do
     end
 
     context 'initial_direction is NORTH' do
-      let(:initial_direction) { 'NORTH' }
-      it { is_expected.to eq 'WEST' }
+      let(:initial_direction) { Direction::NORTH }
+      it { is_expected.to eq Direction::WEST }
     end
 
     context 'initial_direction is EAST' do
-      let(:initial_direction) { 'EAST' }
-      it { is_expected.to eq 'NORTH' }
+      let(:initial_direction) { Direction::EAST }
+      it { is_expected.to eq Direction::NORTH }
     end
 
     context 'initial_direction is SOUTH' do
-      let(:initial_direction) { 'SOUTH' }
-      it { is_expected.to eq 'EAST' }
+      let(:initial_direction) { Direction::SOUTH }
+      it { is_expected.to eq Direction::EAST }
     end
 
     context 'initial_direction is WEST' do
-      let(:initial_direction) { 'WEST' }
-      it { is_expected.to eq 'SOUTH' }
+      let(:initial_direction) { Direction::WEST }
+      it { is_expected.to eq Direction::SOUTH }
     end
   end
 end

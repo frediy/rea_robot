@@ -7,11 +7,13 @@ describe CommandsInterpreter do
 
   describe '#process' do
     let(:position) { Position[0, 0] }
+    let(:direction) { Direction::NORTH }
 
     subject(:process) { commands_interpreter.process }
 
     before do
       allow(Position).to receive(:[]).with(0, 0).and_return position
+      allow(Direction).to receive(:from_str).with('NORTH').and_return direction
     end
 
     after { process }
@@ -28,7 +30,7 @@ REPORT
       end
 
       it 'receives any command in correct order' do
-        expect(robot).to receive(:place).with(position, 'NORTH')
+        expect(robot).to receive(:place).with(position, direction)
         expect(robot).to receive(:turn_left).ordered
         expect(robot).to receive(:turn_right).ordered
         expect(robot).to receive(:move_forward).ordered
@@ -39,7 +41,7 @@ REPORT
     context 'single commands' do
       describe 'PLACE' do
         let(:commands_string) { 'PLACE 0,0,NORTH' }
-        specify { expect(robot).to receive(:place).with(position, 'NORTH') }
+        specify { expect(robot).to receive(:place).with(position, direction) }
       end
 
       describe 'LEFT' do
