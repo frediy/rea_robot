@@ -3,7 +3,6 @@ class Robot
 
   attr_reader :position, :direction
 
-  ## Writer Commands
   def place(position, direction)
     @position = position
     @direction = direction
@@ -25,7 +24,6 @@ class Robot
     @direction = @direction.rotate_clockwise
   end
 
-  ## Query Commands
   def report
     raise CommandIgnoredError if ignore_commands?
     "#{@position},#{@direction}"
