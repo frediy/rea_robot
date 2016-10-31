@@ -6,13 +6,13 @@ class Robot
   def direction_vector
     case @direction
     when 'NORTH'
-      Vector[0, 1]
+      Direction[0, 1]
     when 'EAST'
-      Vector[1, 0]
+      Direction[1, 0]
     when 'SOUTH'
-      Vector[0, -1]
+      Direction[0, -1]
     else # WEST
-      Vector[-1, 0]
+      Direction[-1, 0]
     end
   end
 
