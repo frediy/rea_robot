@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Vector do
+  let(:x) { 0 }
+  let(:y) { 0 }
+
   subject(:vector) { Vector.new(x, y) }
 
   describe '#==' do
-    let(:x) { 0 }
-    let(:y) { 0 }
-
     let(:other_x) { 0 }
     let(:other_y) { 0 }
 
@@ -36,6 +36,22 @@ describe Vector do
   end
 
   describe '#+' do
+    let(:other) { Vector.new(other_x, other_y) }
 
+    subject(:+) { vector + other }
+
+    context 'other x and y positive' do
+      let(:other_x) { 2 }
+      let(:other_y) { 3 }
+
+      it { is_expected.to eq Vector.new(2, 3) }
+    end
+
+    context 'other x and y negative' do
+      let(:other_x) { -2 }
+      let(:other_y) { -3 }
+
+      it { is_expected.to eq Vector.new(-2, -3) }
+    end
   end
 end
