@@ -53,31 +53,31 @@ describe Robot do
       move_forward
     end
 
-    context 'placed where can always move (middle)' do
-      let(:position) { Vector.new(3, 3) }
+    context 'placed where can always move' do
+      let(:position) { Position::MIDDLE }
 
       context 'when direction is NORTH' do
         let(:direction) { 'NORTH' }
 
-        specify { expect(robot.position).to eq position + Vector.new(0, 1) }
+        specify { expect(robot.position).to eq Vector.new(2, 3) }
       end
 
       context 'when direction is EAST' do
         let(:direction) { 'EAST' }
 
-        specify { expect(robot.position).to eq position + Vector.new(1, 0) }
+        specify { expect(robot.position).to eq Vector.new(3, 2) }
       end
 
       context 'when direction is SOUTH' do
         let(:direction) { 'SOUTH' }
 
-        specify { expect(robot.position).to eq position + Vector.new(0, -1) }
+        specify { expect(robot.position).to eq Vector.new(2, 1) }
       end
 
       context 'when direction is WEST' do
         let(:direction) { 'WEST' }
 
-        specify { expect(robot.position).to eq position + Vector.new(-1, 0) }
+        specify { expect(robot.position).to eq Vector.new(1, 2) }
       end
     end
 
