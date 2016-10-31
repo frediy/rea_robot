@@ -3,14 +3,6 @@ class Robot
 
   attr_reader :position, :direction
 
-  def x
-    @position.x
-  end
-
-  def y
-    @position.y
-  end
-
   def direction_vector
     case @direction
     when 'NORTH'
