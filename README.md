@@ -27,3 +27,5 @@ I have refactored Robot fairly heavily in order to show knowledge of oo design p
 While there is enough error handling to meet the problem specification, the application won't fail gracefully for incorrect input. If the application was known to have some chance of receiving incorrect input, I would implement this.
 
 If the test suite grew large and slow, integration tests could be moved to be called directly on CommandsInterpreter, and the executable robot could be tested to ensure that it calls CommandsInterpreter correctly for all input. I did not do this as there is a higher risk of failure if an integration spec isn't exactly simulating the environment it is testing.
+
+The test suite is really fast. The integration tests the application well, though it would not hurt the test speed nor the quality of the application to add in more tests of long obscure walks.
