@@ -126,4 +126,25 @@ REPORT
 
     it { is_expected.to eq "" }
   end
+
+  describe 'long obscure walk' do
+    let(:command_file_content) do
+      <<-eos
+PLACE 4,4,NORTH
+RIGHT
+RIGHT
+MOVE
+MOVE
+RIGHT
+MOVE
+LEFT
+MOVE
+MOVE
+MOVE
+REPORT
+      eos
+    end
+
+    it { is_expected.to eq "3,0,SOUTH\n" }
+  end
 end
