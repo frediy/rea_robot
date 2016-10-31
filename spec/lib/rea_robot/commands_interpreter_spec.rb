@@ -6,7 +6,13 @@ describe CommandsInterpreter do
   subject(:commands_interpreter) { CommandsInterpreter.new(commands_string, robot) }
 
   describe '#process' do
+    let(:vector) { Vector.new(0, 0) }
+
     subject(:process) { commands_interpreter.process }
+
+    before do
+      allow(Vector).to receive(:new).with(0, 0).and_return vector
+    end
 
     after { process }
 
@@ -22,7 +28,7 @@ REPORT
       end
 
       it 'receives any command in correct order' do
-        expect(robot).to receive(:place).with(0,0,'NORTH').ordered
+        expect(robot).to receive(:place).with(vector, 'NORTH')
         expect(robot).to receive(:turn_left).ordered
         expect(robot).to receive(:turn_right).ordered
         expect(robot).to receive(:move_forward).ordered
@@ -33,7 +39,7 @@ REPORT
     context 'single commands' do
       describe 'PLACE' do
         let(:commands_string) { 'PLACE 0,0,NORTH' }
-        specify { expect(robot).to receive(:place).with(0,0,'NORTH') }
+        specify { expect(robot).to receive(:place).with(vector, 'NORTH') }
       end
 
       describe 'LEFT' do

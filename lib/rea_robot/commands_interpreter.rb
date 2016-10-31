@@ -30,14 +30,14 @@ private
     when 'REPORT'
       puts @robot.report
     else # PLACE
-      x, y, direction = position_and_direction_from_place_command(command)
-      @robot.place(x, y, direction)
+      position, direction = position_and_direction_from_place_command(command)
+      @robot.place(position, direction)
     end
   end
 
   def position_and_direction_from_place_command(command)
-    position_and_direction_text = command.split(' ').last
-    x, y, direction = position_and_direction_text.split(',')
-    [x.to_i, y.to_i, direction]
+    x_y_and_direction_str = command.split(' ').last
+    x, y, direction = x_y_and_direction_str.split(',')
+    [Vector.new(x.to_i, y.to_i), direction]
   end
 end
