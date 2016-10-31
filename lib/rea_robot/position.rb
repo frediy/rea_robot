@@ -13,6 +13,14 @@ class Position < Vector
     self[1]
   end
 
+  def +(other)
+    if other.is_a?(Position) || other.is_a?(Direction)
+      Position[self.x + other.x, self.y + other.y]
+    else
+      super(other)
+    end
+  end
+
   def on_board?
     0 <= x && x <= 4 &&
     0 <= y && y <= 4

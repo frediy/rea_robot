@@ -116,7 +116,7 @@ describe Robot do
   describe '#turn_right' do
     let(:position) { Position[0, 0] }
 
-    subject(:direction) { robot.direction }
+    subject(:direction) { robot.direction.to_s }
 
     before do
       robot.place(position, initial_direction)
@@ -147,7 +147,7 @@ describe Robot do
   describe '#turn_left' do
     let(:position) { Position[0, 0] }
 
-    subject(:direction) { robot.direction }
+    subject(:direction) { robot.direction.to_s }
 
     before do
       robot.place(position, initial_direction)

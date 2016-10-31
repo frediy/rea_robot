@@ -4,16 +4,7 @@ class Robot
   attr_reader :position, :direction
 
   def direction_vector
-    case @direction
-    when 'NORTH'
-      Direction[0, 1]
-    when 'EAST'
-      Direction[1, 0]
-    when 'SOUTH'
-      Direction[0, -1]
-    else # WEST
-      Direction[-1, 0]
-    end
+
   end
 
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
@@ -21,23 +12,23 @@ class Robot
   ## Writer Commands
   def place(position, direction)
     @position = position
-    @direction = direction
+    @direction = Direction.from_str(direction)
   end
 
   def move_forward
     raise CommandIgnoredError if ignore_commands?
-    new_position = @position + direction_vector
+    new_position = @position + @direction
     @position = new_position if can_move_to?(new_position)
   end
 
   def turn_left
     raise CommandIgnoredError if ignore_commands?
-    @direction = DIRECTIONS[direction_index - 1]
+    @direction = @direction.rotate_counter_clockwise
   end
 
   def turn_right
     raise CommandIgnoredError if ignore_commands?
-    @direction = DIRECTIONS[direction_index + 1 - DIRECTIONS.length]
+    @direction = @direction.rotate_clockwise
   end
 
   ## Query Commands
@@ -47,10 +38,6 @@ class Robot
   end
 
 private
-
-  def direction_index
-    DIRECTIONS.index(@direction)
-  end
 
   def can_move_to?(position)
     position.on_board?
