@@ -1,12 +1,20 @@
-module Position
-  BOTTOM_LEFT_CORNER =  Vector[0, 0]
-  BOTTOM_RIGHT_CORNER = Vector[1, 0]
-  TOP_LEFT_CORNER =     Vector[0, 1]
-  TOP_RIGHT_CORNER =    Vector[1, 1]
-  MIDDLE =              Vector[2, 2]
+class Position < Vector
+  BOTTOM_LEFT_CORNER =  Position[0, 0]
+  BOTTOM_RIGHT_CORNER = Position[1, 0]
+  TOP_LEFT_CORNER =     Position[0, 1]
+  TOP_RIGHT_CORNER =    Position[1, 1]
+  MIDDLE =              Position[2, 2]
 
-  def self.on_board?(position)
-    0 <= position[0] && position[0] <= 4 &&
-    0 <= position[1] && position[1] <= 4
+  def x
+    self[0]
+  end
+
+  def y
+    self[1]
+  end
+
+  def on_board?
+    0 <= x && x <= 4 &&
+    0 <= y && y <= 4
   end
 end

@@ -43,7 +43,7 @@ class Robot
   ## Query Commands
   def report
     raise CommandIgnoredError if ignore_commands?
-    "#{@position[0]},#{@position[1]},#{@direction}"
+    "#{@position.x},#{@position.y},#{@direction}"
   end
 
 private
@@ -53,7 +53,7 @@ private
   end
 
   def can_move_to?(position)
-    Position.on_board?(position)
+    position.on_board?
   end
 
   def ignore_commands?
@@ -65,6 +65,6 @@ private
   end
 
   def on_board?
-    Position.on_board?(@position)
+    @position.on_board?
   end
 end

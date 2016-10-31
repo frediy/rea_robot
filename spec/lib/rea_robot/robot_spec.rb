@@ -4,7 +4,7 @@ describe Robot do
   subject(:robot) { Robot.new }
 
   describe 'ignore commands' do
-    let(:position) { Vector[10, 10] }
+    let(:position) { Position[10, 10] }
 
     let(:direction) { 'NORTH' }
 
@@ -59,25 +59,25 @@ describe Robot do
       context 'when direction is NORTH' do
         let(:direction) { 'NORTH' }
 
-        specify { expect(robot.position).to eq Vector[2, 3] }
+        specify { expect(robot.position).to eq Position[2, 3] }
       end
 
       context 'when direction is EAST' do
         let(:direction) { 'EAST' }
 
-        specify { expect(robot.position).to eq Vector[3, 2] }
+        specify { expect(robot.position).to eq Position[3, 2] }
       end
 
       context 'when direction is SOUTH' do
         let(:direction) { 'SOUTH' }
 
-        specify { expect(robot.position).to eq Vector[2, 1] }
+        specify { expect(robot.position).to eq Position[2, 1] }
       end
 
       context 'when direction is WEST' do
         let(:direction) { 'WEST' }
 
-        specify { expect(robot.position).to eq Vector[1, 2] }
+        specify { expect(robot.position).to eq Position[1, 2] }
       end
     end
 
@@ -88,25 +88,25 @@ describe Robot do
     context 'placed on edge facing edge' do
       describe 'NORTH edge' do
         let(:direction) { 'NORTH' }
-        let(:position) { Vector[0, 4] }
+        let(:position) { Position[0, 4] }
 
         it_behaves_like 'does not move'
       end
       describe 'EAST edge' do
         let(:direction) { 'EAST' }
-        let(:position) { Vector[4, 0] }
+        let(:position) { Position[4, 0] }
 
         it_behaves_like 'does not move'
       end
       describe 'SOUTH edge' do
         let(:direction) { 'SOUTH' }
-        let(:position) { Vector[0, 0] }
+        let(:position) { Position[0, 0] }
 
         it_behaves_like 'does not move'
       end
       describe 'WEST edge' do
         let(:direction) { 'WEST' }
-        let(:position) { Vector[0, 0] }
+        let(:position) { Position[0, 0] }
 
         it_behaves_like 'does not move'
       end
@@ -114,7 +114,7 @@ describe Robot do
   end
 
   describe '#turn_right' do
-    let(:position) { Vector[0, 0] }
+    let(:position) { Position[0, 0] }
 
     subject(:direction) { robot.direction }
 
@@ -145,7 +145,7 @@ describe Robot do
   end
 
   describe '#turn_left' do
-    let(:position) { Vector[0, 0] }
+    let(:position) { Position[0, 0] }
 
     subject(:direction) { robot.direction }
 

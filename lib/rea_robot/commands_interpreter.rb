@@ -38,6 +38,6 @@ private
   def position_and_direction_from_place_command(command)
     x_y_and_direction_str = command.split(' ').last
     x, y, direction = x_y_and_direction_str.split(',')
-    [Vector[x.to_i, y.to_i], direction]
+    [Position[x.to_i, y.to_i], direction]
   end
 end
