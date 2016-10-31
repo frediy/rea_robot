@@ -6,12 +6,12 @@ describe CommandsInterpreter do
   subject(:commands_interpreter) { CommandsInterpreter.new(commands_string, robot) }
 
   describe '#process' do
-    let(:vector) { Vector.new(0, 0) }
+    let(:vector) { Vector[0, 0] }
 
     subject(:process) { commands_interpreter.process }
 
     before do
-      allow(Vector).to receive(:new).with(0, 0).and_return vector
+      allow(Vector).to receive(:[]).with(0, 0).and_return vector
     end
 
     after { process }

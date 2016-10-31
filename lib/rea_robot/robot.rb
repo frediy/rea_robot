@@ -6,13 +6,13 @@ class Robot
   def direction_vector
     case @direction
     when 'NORTH'
-      Vector.new(0, 1)
+      Vector[0, 1]
     when 'EAST'
-      Vector.new(1, 0)
+      Vector[1, 0]
     when 'SOUTH'
-      Vector.new(0, -1)
+      Vector[0, -1]
     else # WEST
-      Vector.new(-1, 0)
+      Vector[-1, 0]
     end
   end
 
@@ -43,7 +43,7 @@ class Robot
   ## Query Commands
   def report
     raise CommandIgnoredError if ignore_commands?
-    "#{@position.x},#{@position.y},#{@direction}"
+    "#{@position[0]},#{@position[1]},#{@direction}"
   end
 
 private
